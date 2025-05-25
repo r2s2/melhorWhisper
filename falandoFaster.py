@@ -33,11 +33,11 @@ import time
 # Carregar o modelo do Faster Whisper
 # Primeiro parâmetro é o tamanho do modelo: "tiny", "base", "small", "medium", "large"
 # compute_type pode ser "int8", "float16", ou "float32"
-model = WhisperModel("large", device="cuda", compute_type="float32", cpu_threads=4, num_workers=2)
+model = WhisperModel("large", device="cuda", compute_type="float32", cpu_threads=4, num_workers=3)
 
 # Parâmetros de gravação
 samplerate = 16000  # Taxa de amostragem compatível com Whisper
-block_duration = 3  # duração de cada bloco em segundos
+block_duration = 5  # duração de cada bloco em segundos
 block_size = samplerate * block_duration
 
 # fila para comunicação entre a captura de áudio e a transcrição
@@ -88,7 +88,7 @@ def transcribe_stream():
                 for segment in segments:
                     transcribed_text += segment.text + " "
                 
-                print("Transcrição:", transcribed_text)
+                # print("Transcrição:", transcribed_text) # muito chato isso aqui, fica no terminal printando
                 
                 # Digita o texto onde o cursor está posicionado usando clipboard para preservar acentos
                 if transcribed_text.strip():  # Verifica se há texto para digitar
